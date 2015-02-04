@@ -1,4 +1,5 @@
 #include "Led.h"
+#include "head.h"
 #include "rtthread.h"
 
 Led led1(GPIOA,GPIO_Pin_5);
@@ -62,7 +63,7 @@ void rt_thread_entry_led(void* parameter)
 		else if(tick>led1Tick)
 		{
 			led1.toggle();
-			led1Tick = tick + led1.interval / 2;
+			led1Tick = tick + led1.interval / MS_PER_TICK;
 		}
 		//led2
 		if(led2.interval == 0xff)
@@ -72,7 +73,7 @@ void rt_thread_entry_led(void* parameter)
 		else if(tick>led2Tick)
 		{
 			led2.toggle();
-			led2Tick = tick + led2.interval / 2;
+			led2Tick = tick + led2.interval / MS_PER_TICK;
 		}
 		//led3
 		if(led3.interval == 0xff)
@@ -82,9 +83,9 @@ void rt_thread_entry_led(void* parameter)
 		else if(tick>led3Tick)
 		{
 			led3.toggle();
-			led3Tick = tick + led3.interval / 2;
+			led3Tick = tick + led3.interval / MS_PER_TICK;
 		}
-		rt_thread_delay(50);
+		DELAY_MS(100);
 	}
 }
 

@@ -2,7 +2,7 @@
 #include "arm_math.h"
 
 #define sampleFreq	170.0f		// sample frequency in Hz
-#define betaDef		0.2f		// 2 * proportional gain
+#define betaDef		0.1f		// 2 * proportional gain
 #define M_57_3 57.295779f
 #define INTERVAL 0.004f
 //---------------------------------------------------------------------------------------------------
@@ -74,6 +74,8 @@ void Quaternion::toEuler(float& pitch,float& roll, float& yaw)
 	pitch = (float)atan2(2 * w*x + 2 * y*z, 1 - 2 * x*x - 2 * y*y)*M_57_3;
     roll = (float)asin(2 * w*y - 2 * z*x)*M_57_3;
     yaw = (float)atan2(2 * w*z + 2 * x*y, 1 - 2 * y*y - 2 * z*z)*M_57_3;
+	yaw += 90;
+	if(yaw >= 180) yaw -= 360;
 }
 
 void Quaternion::MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz)
